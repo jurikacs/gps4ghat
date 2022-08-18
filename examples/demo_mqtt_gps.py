@@ -27,7 +27,7 @@ module = BG77X()
 module.debug_print("MQTT client GNSS position demo")
 
 mqtt_topic = os.environ.get("MQTT_TOPIC_GPS") + os.environ.get("MQTT_CLIENT_ID")
-mqtt_receive_topic = os.environ.get("MQTT_TOPIC_RECIEVE") + os.environ.get("MQTT_CLIENT_ID")
+mqtt_receive_topic = os.environ.get("MQTT_TOPIC_RECEIVE") + os.environ.get("MQTT_CLIENT_ID")
 
 mqtt_json = json.loads(gps_json_string)
 mqtt_json['imei'] = module.getIMEI()

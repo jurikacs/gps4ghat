@@ -1,3 +1,4 @@
+# call: python.exe setup.py sdist bdist_wheel
 # Always prefer setuptools over distutils
 from setuptools import setup, find_packages
 
@@ -35,7 +36,7 @@ setup(
     include_package_data=True,
     install_requires=[
         "pynmea2",
-        "dotenv"
+        "python-dotenv"
         ]
 )
 
