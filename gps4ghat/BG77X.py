@@ -87,7 +87,11 @@ class BG77X:
         if "win" in sys.platform:
             ser.port = "COM4"
 
-        load_dotenv(find_dotenv())
+        _env = find_dotenv()
+        if not _env:
+            self.debug_print("ERROR: .env file not found")
+        else:
+            load_dotenv(_env)
 
         ser.baudrate = serial_baudrate
         ser.parity=serial.PARITY_NONE
