@@ -23,22 +23,14 @@ lon_org = 6.71466
 #   network access and MQTT service data
 #----------------------------------------------------------------------------------------
 
-
 module = BG77X()
 module.debug_print("MQTT client GNSS position demo")
 
-module.getHardwareInfo()
-module.getFirmwareInfo()
-module.IMEI = '866349041749536' # module.getIMEI()
-if not module.IMEI:
-    module.debug_print("ERROR. unknown IMEI, exit")
-    sys.exit(0)
-
-mqtt_topic = os.environ.get("MQTT_TOPIC_GPS") + '/' + module.IMEI
-mqtt_receive_topic = "receive" + '/' + module.IMEI
+mqtt_topic = os.environ.get("MQTT_TOPIC_GPS") + os.environ.get("MQTT_CLIENT_ID")
+mqtt_receive_topic = os.environ.get("MQTT_TOPIC_RECIEVE") + os.environ.get("MQTT_CLIENT_ID")
 
 mqtt_json = json.loads(gps_json_string)
-mqtt_json['imei'] = module.IMEI
+mqtt_json['imei'] = module.getIMEI()
 mqtt_json['latitude'] = lat_org
 mqtt_json['longitude'] = lon_org
 mqtt_json['altitude'] = 0

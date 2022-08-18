@@ -196,6 +196,7 @@ try:
         module.getIMEI()
 
         contextID = "1"
+        mqtt_topic_gps = os.environ.get("MQTT_TOPIC_GPS") + os.environ.get("MQTT_CLIENT_ID")
         if module.initNetwork(contextID):
             module.activatePdpContext(contextID, 5)
 
@@ -204,7 +205,7 @@ try:
             module.openMqttConnection(mgtt_client_idx, os.environ.get("MQTT_BROKER"), os.environ.get("MQTT_PORT"))
             module.connectMqttClient(mqtt_client_id_string, os.environ.get("MQTT_USERNAME"), os.environ.get("MQTT_PASSWORD"))
 
-            module.publishMqttMessage(os.environ.get("MQTT_TOPIC"), mqtt_msg)
+            module.publishMqttMessage(mqtt_topic_gps, mqtt_msg)
 
             module.disconnectMqttClient()
             module.closeConnection()

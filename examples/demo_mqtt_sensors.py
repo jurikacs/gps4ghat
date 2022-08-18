@@ -26,19 +26,13 @@ sensors_json_string = """{
 #   network access and MQTT service data
 #----------------------------------------------------------------------------------------
 
-
-
 module = BG77X()
 module.debug_print("MQTT client sensors information demo")
 
-module.IMEI = '866349041749536' # module.getIMEI()
-if not module.IMEI:
-    module.debug_print("ERROR. unknown IMEI, exit")
-    sys.exit(0)
-mqtt_topic = os.environ.get("MQTT_TOPIC_SENSORS") + '/' + module.IMEI
-mqtt_receive_topic = "receive" + '/' + module.IMEI
+mqtt_topic = os.environ.get("MQTT_TOPIC_SENSORS") + os.environ.get("MQTT_CLIENT_ID")
+mqtt_receive_topic = os.environ.get("MQTT_TOPIC_RECIEVE") + os.environ.get("MQTT_CLIENT_ID")
 mqtt_json = json.loads(sensors_json_string)
-mqtt_json['imei'] = module.IMEI
+mqtt_json['imei'] = module.getIMEI()
 
 accel = MC34X9()
 
@@ -93,12 +87,9 @@ if module.initNetwork(contextID):
     start_time = time.time()
     while(time.time() - start_time < wait_s):  
         if(module.waitUnsolicitedStill("+QMTRECV:", 1, 160)):
-            start = module.response.find(',"{') + 2
-            if start > 2:
-                #print(start, module.response[start:-3])
-                response_json = json.loads(module.response[start : -3])
-                #print(json.dumps(response_json))
-
+            json_start = module.response.find(',"{') + 2
+            if json_start > 2:
+                response_json = json.loads(module.response[json_start : -3])
                 print("response: " + response_json['data']['response'])
                 print("topic:    " + response_json['data']['topic'])
                 break

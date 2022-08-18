@@ -15,7 +15,7 @@ with open(path.join(HERE, 'README'), encoding='utf-8') as f:
 # This call to setup() does all the work
 setup(
     name="gps4ghat",
-    version="0.1.0",
+    version="0.1.1",
     description="python library for Finamon GNSS/4G Modem HAT Shield",
     long_description=long_description,
     long_description_content_type="text/markdown",
