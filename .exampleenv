@@ -18,16 +18,3 @@ MQTT_PASSWORD=flake-iraq-contra
 MQTT_TOPIC_RECEIVE=receive/
 MQTT_TOPIC_GPS=gps/coordinates/
 MQTT_TOPIC_SENSORS=sensors/acceleration/
-
-import os
-from pathlib import Path
-from dotenv import load_dotenv
-
-# Get the base directory
-basepath = Path()
-basedir = str(basepath.cwd())
-# Load the environment variables
-envars = basepath.cwd() / '.env'
-load_dotenv(envars)
-# Read an environment variable.
-SECRET_KEY = os.getenv('SECRET_KEY')
