@@ -87,11 +87,14 @@ class BG77X:
         if "win" in sys.platform:
             ser.port = "COM4"
 
-        _env = find_dotenv()
-        if not _env:
-            self.debug_print("ERROR: .env file not found")
+        envars = os.getcwd() + '/.env'
+        load_dotenv(envars)
+        
+        if os.getenv('CONTEXT_APN'):
+            self.debug_print("variables loaded from " + str(envars))
         else:
-            load_dotenv(_env)
+            self.debug_print("can't load variables from " + str(envars))
+            #print(*sys.path, sep='\n')
 
         ser.baudrate = serial_baudrate
         ser.parity=serial.PARITY_NONE
@@ -335,6 +338,9 @@ class BG77X:
     def configTcpIpContext(self, contextID, APN="", username = "", password = "", timeout_s = None):
         if not APN:
             APN = os.environ.get("CONTEXT_APN")
+            if APN == "None":
+                self.debug_print("APN not defined, context configuration command skipped")
+                return False
         if not username:
             username = os.environ.get("CONTEXT_USERNAME")
         if not password:
