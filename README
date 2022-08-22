@@ -15,6 +15,9 @@ Basic examples showing how to work with Finamon GPS 4G shield onboard devices us
 - demo_GPS_4G_HAT.py
 - demo_mqtt.py 
 
+![CON_DATA_jpg](../res/GPS_4G_HAT_CON_DATA.jpg)
+
+![CON_DATA_svg](../res/GPS_4G_HAT_CON_DATA.svg)
 
 **Prerequisites**
 - install pynmea2
