@@ -630,10 +630,4 @@ if __name__=='__main__':
     module.close()
     delay(2000)
     
-#AT+COPS=? +COPS:
-#    (1,"Vodafone.de","Vodafone","26202",9),
-#    (1,"Telekom.de","TDG","26201",8),
-#    (1,"o2 - de","o2 - de","26203",8),
-#    (1,"Vodafone.de","Vodafone","26202",8),
-#    ,(0,1,2,3,4),(0,1,2)
 

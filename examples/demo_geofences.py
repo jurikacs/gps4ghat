@@ -2,10 +2,8 @@
   demo_geofences.py - This is basic Finamon GNSS/4G Modem HAT Shield positioning function example.
 '''
 import time
-import os
 import sys
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from gps4ghat.BG77X import BG77X
 from gps4ghat.BG77X import GEO_FENCE_REPORT_MODE
