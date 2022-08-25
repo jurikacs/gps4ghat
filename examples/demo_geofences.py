@@ -37,6 +37,7 @@ geofence_query = [
     "geo-fence ID does not exist"
     ]
 
+print("\nhttps://maps.google.com/?q=%s,%s\n" % (lat_org, lon_org))
 
 navigator = BG77X()
 navigator.gnssOn()
@@ -66,14 +67,19 @@ try:
     navigator.deleteGeofence(circle)
     navigator.deleteGeofence(quad)
 
-    # create 10 geofences in form of shuting target with radius step 5 meter 
+    # create 10 geofences in form of shuting target with radius step 10 meter 
     for geoid in range(9):
-        navigator.addGeofence(geoid, GEO_FENCE_REPORT_MODE.ENTER_LEAVE, GEO_FENCE_SHAPE.CIRCLE_RADIUS, geofence_center, (geoid + 1) * 5)
+        navigator.addGeofence(geoid, GEO_FENCE_REPORT_MODE.ENTER_LEAVE, GEO_FENCE_SHAPE.CIRCLE_RADIUS, geofence_center, (geoid + 1) * 10)
 
     for i in range(10):
+        points = list('---------')
         for geoid in range(9):
-            print(geofence_query[navigator.queryGeofence(geoid)])
-        time.sleep(10.)
+            res = navigator.queryGeofence(geoid)
+            if(res == 1):
+                points[geoid] = '+'
+        str_points = ''.join(points)        
+        print(str_points)
+        time.sleep(5.)
 
     navigator.gnssOff()
     navigator.close()

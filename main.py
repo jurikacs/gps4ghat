@@ -13,6 +13,7 @@ module.getHardwareInfo()
 module.getFirmwareInfo()
 module.getIMEI()
 #module.sendATcmd("AT+COPS=?", "OK", 600)
+module.acquareSettings()
 if module.initNetwork(contextID, os.environ.get("CONTEXT_APN"), 600): 
     module.activatePdpContext(contextID, 5)
     module.ping(contextID,"google.com")

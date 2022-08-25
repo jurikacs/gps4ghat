@@ -12,5 +12,9 @@ ser.bytesize=serial.EIGHTBITS
 ser.open()
 ser.write("AT+QPOWD=1\r".encode())
 time.sleep(1.)
+if(ser.in_waiting):
+    print(ser.read(ser.in_waiting).decode('utf-8', errors='ignore'))
+else:
+    print("shutdown problem detected")
 ser.close()
 

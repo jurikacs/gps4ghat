@@ -18,7 +18,11 @@ Basic examples showing how to work with Finamon GPS 4G shield onboard devices us
 
 ![CON_DATA_jpg](./res/GPS_4G_HAT_CON_DATA.jpg)
 
-![CON_DATA_svg](./res/GPS_4G_HAT_CON_DATA.svg)
+![CON_IN_jpg](./res/GPS_4G_HAT_CON_IN.jpg)
+
+![CON_OUT_jpg](./res/GPS_4G_HAT_CON_OUT.jpg)
+
+![CON_ANT_jpg](./res/GPS_4G_HAT_ANT.jpg)
 
 **Prerequisites**
 - install pynmea2

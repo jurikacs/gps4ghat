@@ -320,6 +320,18 @@ class BG77X:
         return False
 
     # Function for getting signal quality
+    #+CSQ:<rssi>,<ber> 
+    # 0     -113dBm or less
+    # 1     -111dBm
+    # 2–30  -109 to -53dBm   dbm = 2x<rssi> - 113
+    # 31    -51dBm or greater
+    # 99    Not known or not detectable
+    #+QCSQ:<LTE_RSSI>,<LTE_RSRP>,<LTE_SINR>,<LTE_RSRQ>
+    # RF Quality      RSRP (dbm)            RSRQ (dB)
+    # Excellent	      >= -80                >= -10
+    # Good	          -80 to -90            -10 to -15
+    # 'Mid Cell'      -90 to -100           -15 to -20
+    # 'Cell Edge'	  < -100                < -20
     def getSignalQuality(self):
         self.sendATcmd("AT+QTEMP","OK\r\n", 5)
         self.sendATcmd("AT+CSQ","OK\r\n", 5)
@@ -380,6 +392,42 @@ class BG77X:
             ret &= self.sendATcmd(cmd[0], cmd[1], cmd[2])
             delay(2500)
         return ret
+
+    def acquareSettings(self):
+        settings = [
+            "airplanecontrol",
+            "apn/display",
+            "apready",
+            "band",
+            "celevel",
+            "edrxusimact",
+            "emux/urcport",
+            "gpio",
+            "iotopmode",
+            "lapiconf",
+            "ledmode",
+            "lte/bandprior",
+            "lwm2m",
+            "netupd",
+            "nwoper",
+            "nwscanseq",
+            "ps_dev_mob_type",
+            "psm/enter",
+            "psm/urc",
+            "risignaltype",
+            "servicedomain",
+            "setsyscfg",
+            "urc/delay",
+            "urc/ri/other",
+            "urc/ri/ring",
+            "urc/ri/smsincoming",
+            "usb",
+            "usb/urcport"
+        ]
+        #self.sendATcmd('AT+QCFG=?')
+        for setting in settings:
+            self.sendATcmd('AT+QCFG="' + setting + '"')
+            delay(500)
 
     #----------------------------------------------------------------------------------------
     #    UDP Protocols Functions
@@ -525,9 +573,6 @@ class BG77X:
         if radius:
             coord_string += ',' + str(radius)
         self.sendATcmd('AT+QCFGEXT="addgeo",%d,%d,%d%s' % (geoid, mode.value, shape.value, coord_string))
-
-    def queryGeofence(self, geoid):
-        self.sendATcmd('AT+QCFGEXT="addgeo",' + str(geoid))
 
     def deleteGeofence(self, geoid):
         self.sendATcmd('AT+QCFGEXT="deletegeo",' + str(geoid))

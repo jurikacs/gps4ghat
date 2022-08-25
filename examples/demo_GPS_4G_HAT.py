@@ -59,20 +59,23 @@ def loc2gps_json (gpsloc):
     mqtt_json['utc'] = dt.timestamp()
     return mqtt_json
 
+bWriteLog = True
+
 def writeNMAlog (file):
 
     head = "+QGPSGNMEA: "
 
-#     module.sendATcmd('AT+QGPSGNMEA="GSV"')
-#     start = module.response.find(head)
-#     while start != -1:
-#         start += len(head)
-#         end = module.response.find(head, start)
-#         if end == -1:
-#             file.write(module.response[start:module.response.find("OK", start) - 2])
-#             break;
-#         file.write(module.response[start:end])
-#         start = end
+    if bWriteLog:
+        module.sendATcmd('AT+QGPSGNMEA="GSV"')
+        start = module.response.find(head)
+        while start != -1:
+            start += len(head)
+            end = module.response.find(head, start)
+            if end == -1:
+                file.write(module.response[start:module.response.find("OK", start) - 2])
+                break;
+            file.write(module.response[start:end])
+            start = end
         
     module.sendATcmd('AT+QGPSGNMEA="RMC"')
     start = module.response.find(head)
@@ -134,14 +137,15 @@ accel.printAccel()
 
 module = BG77X()
 
-module.sendATcmd("AT")
+module.sendATcmd("AT+CMEE=2")
 module.getHardwareInfo()
 module.getFirmwareInfo()
 module.getIMEI()
 
 #module.acquireGnssSettings()
-file = open("../nmea_60sec.log", "a")
-file.write("\nIMEI: %s\n" % module.IMEI)
+if bWriteLog:
+    file = open("../nmea_rmc.log", "a")
+    file.write("\nIMEI: %s\n" % module.IMEI)
 
 try:
     while True:
@@ -187,11 +191,7 @@ try:
             mqtt_msg = json.dumps(mqtt_json)
         else:
             continue
-
-        module.getHardwareInfo()
-        module.getFirmwareInfo()
-        module.getIMEI()
-
+            
         contextID = "1"
         mqtt_topic_gps = os.environ.get("MQTT_TOPIC_GPS") + os.environ.get("MQTT_CLIENT_ID")
         if module.initNetwork(contextID):
@@ -211,9 +211,14 @@ try:
         module.close()
         time.sleep(2.)
         
+except Exception as e:
+    print('exception: ' + str(e))
+    
 finally:
     print("Ctrl+C pressed, switch BG77X off and exit")
     module.close()
+    if bWriteLog:
+        file.close()
     sys.exit(0)
     
 #51.229047, 6.714671 work
