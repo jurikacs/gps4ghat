@@ -12,35 +12,45 @@ from gps4ghat.GPS_4G_HAT_HW import GPS_4G_HAT_HW
 
 shield = GPS_4G_HAT_HW()
 
+GPIO.output(shield.OUT1_RO, 1)
+GPIO.output(shield.OUT2_RO, 1)
+GPIO.output(shield.OUT3_RO, 1)
+GPIO.output(shield.OUT4_RO, 1)
+time.sleep(.5)
+GPIO.output(shield.OUT1_RO, 0)
+GPIO.output(shield.OUT2_RO, 0)
+GPIO.output(shield.OUT3_RO, 0)
+GPIO.output(shield.OUT4_RO, 0)
+
 while True:
     if GPIO.input(shield.IN1_RI):
         time.sleep(1)
-        GPIO.output(shield.OUT1_RO, 0)
-        time.sleep(.5)
         GPIO.output(shield.OUT1_RO, 1)
+        time.sleep(.5)
+        GPIO.output(shield.OUT1_RO, 0)
 
     if GPIO.input(shield.IN2_RI):
         time.sleep(1)
         for i in range (2):
-            GPIO.output(shield.OUT2_RO, 0)
-            time.sleep(.5)
             GPIO.output(shield.OUT2_RO, 1)
+            time.sleep(.5)
+            GPIO.output(shield.OUT2_RO, 0)
             time.sleep(.5)
  
     if not GPIO.input(shield.IN3_RI):
         time.sleep(1)
         for i in range (3):
-            GPIO.output(shield.OUT3_RO, 0)
-            time.sleep(.5)
             GPIO.output(shield.OUT3_RO, 1)
+            time.sleep(.5)
+            GPIO.output(shield.OUT3_RO, 0)
             time.sleep(.5)
 
     if not GPIO.input(shield.IN4_RI):
         time.sleep(1)
         for i in range (4):
-            GPIO.output(shield.OUT4_RO, 0)
-            time.sleep(.5)
             GPIO.output(shield.OUT4_RO, 1)
+            time.sleep(.5)
+            GPIO.output(shield.OUT4_RO, 0)
             time.sleep(.5)
 
     if not shield.readUserButton():

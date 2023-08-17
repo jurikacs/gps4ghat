@@ -22,8 +22,34 @@ Basic examples showing how to work with Finamon GPS 4G shield onboard devices us
 
 ![CON_OUT_jpg](./res/GPS_4G_HAT_CON_OUT.jpg)
 
-![CON_ANT_jpg](./res/GPS_4G_HAT_ANT.jpg)
+![CON_ANT_jpg](./res/GPS_4G_HAT_ANT_INTERN.jpg)
+
+![CON_ANT_jpg](./res/GPS_4G_HAT_ANT_EXTERN.jpg)
 
 **Prerequisites**
-- install pynmea2
+- for NMEA message parsing install package pynmea2:
+  pip install pynmea2
+  
+- for acces to SIM card account information install python-dotenv:
+  pip install python-dotenv
+
+**Installation**  
+- clone git repository https://github.com/finamon-de/gps-4g-hat-library
+
+- change directory to: gps-4g-hat-library/gps4ghat/dist/
+  install gps4ghat python package
+  pip install gps4ghat-0.1.0-py3-none-any.whl
+
+**Starting**  
+- change directory to gps-4g-hat-library 
+
+- copy .exampleenv file to .env file and edit SIM account data:
+  CONTEXT_APN
+  CONTEXT_USERNAME
+  CONTEXT_PASSWORD
+  
+- start examples
+  python examples/demo_xxxx.py
+
+
   
