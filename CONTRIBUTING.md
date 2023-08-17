@@ -1,4 +1,4 @@
-# Contributing
+ # Contributing
 
 If you made it here, we are thankful that you think about helping us with this project.
 
